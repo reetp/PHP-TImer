@@ -128,3 +128,65 @@ The way you would use this class is pretty similar to the static class except yo
     print $t2->get(Timer::MILLISECONDS);
 
 Hopefully these examples help. If not, please leave your comments with your questions or suggestions.
+
+
+Some notes from the comments:
+
+Regarding crashing - I suppose you are not seeing any error messages. In that case make sure you have 
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+
+Try adding this function to the non-static version:
+
+/**
+ * Get the average time of execution from all queue entries
+ *
+ * @return float
+ */
+public function getAverage($format = self::SECONDS)
+{
+	$count = count($this->_queue);
+	$sec = 0;
+	$usec = $this->get(self::MICROSECONDS);
+
+	if ($usec > self::USECDIV) {
+		// move the full second microseconds to the seconds' part
+		$sec += (int) floor($usec / self::USECDIV);
+
+		// keep only the microseconds that are over the self::USECDIV
+		$usec = $usec % self::USECDIV;
+	}
+
+	switch ($format) {
+		case self::MICROSECONDS:
+			$value = ($sec * self::USECDIV) + $usec;
+			return round($value / $count, 2);
+
+		case self::MILLISECONDS:
+			$value = ($sec * 1000) + (int) round($usec / 1000, 0);
+			return round($value / $count, 2);
+
+		case self::SECONDS:
+		default:
+			$value = (float) $sec + (float) ($usec / self::USECDIV);
+			return round($value / $count, 2);
+	}
+}
+
+
+Test Sample
+
+Timer::start();
+for ($i = 0; $i < 1000000; $i++) {
+	$x = log($i);
+}
+Timer::stop();
+
+var_dump(Timer::get(Timer::MILLISECONDS)); // int(728)
+var_dump(Timer::get(Timer::MICROSECONDS)); // int(728340)
+var_dump(Timer::get(Timer::SECONDS));      // float(0.72834)
+
