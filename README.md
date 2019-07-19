@@ -1,4 +1,4 @@
-# PHP-TImer
+# PHP-Timer
 PHP Class for code timer
 
 This is a simple class for adding as timer to your PHP script.
