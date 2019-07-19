@@ -10,6 +10,10 @@ I dug the following out of the Wayback machine archive here:
 https://web.archive.org/web/20170531044352/http://codeaid.net/php/calculate-script-execution-time-(php-class)
 
 
+==============================
+
+## Using PHP-Timer
+
 Sometimes when writing PHP code that is supposed to run fast we use the script execution calculation functions. Usually it involves (at least for me :) copying the code from example #1 on PHP's microtime function page and pasting it into your script only to do the same all over again the next time.
 
 However, as good as that script is, it is not versatile enough. It does not, for example, allow you to time execution of only some lines or even more - some separated lines.
@@ -97,11 +101,12 @@ In case you want to track how much time it has taken for the script to run "up t
     }
 
 IMPORTANT!
+
 Timer::get() also stops the timer as it needs to set the final queue entry's end time. Therefore, if you call it between two blocks of code where the time gets calculated, you need to make sure you resume the timer by calling Timer::start().
+
 Non-static version of the class
 
 For those that don't like static classes or who might need multiple instances of the Timer class, here is a modified version of the static class:
-
 
 Download this snippet - (link)
 
@@ -134,9 +139,9 @@ Some notes from the comments:
 
 Regarding crashing - I suppose you are not seeing any error messages. In that case make sure you have 
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+ ini_set('display_errors', 1);
+ ini_set('display_startup_errors', 1);
+ error_reporting(E_ALL);
 
 
 
@@ -180,13 +185,14 @@ public function getAverage($format = self::SECONDS)
 
 Test Sample
 
-Timer::start();
-for ($i = 0; $i < 1000000; $i++) {
-	$x = log($i);
-}
-Timer::stop();
+ <?php
+  Timer::start();
+  for ($i = 0; $i < 1000000; $i++) {
+  	$x = log($i);
+  }
+  Timer::stop();
 
-var_dump(Timer::get(Timer::MILLISECONDS)); // int(728)
-var_dump(Timer::get(Timer::MICROSECONDS)); // int(728340)
-var_dump(Timer::get(Timer::SECONDS));      // float(0.72834)
-
+  var_dump(Timer::get(Timer::MILLISECONDS)); // int(728)
+  var_dump(Timer::get(Timer::MICROSECONDS)); // int(728340)
+  var_dump(Timer::get(Timer::SECONDS));      // float(0.72834)
+ ?>
