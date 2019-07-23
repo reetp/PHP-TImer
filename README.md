@@ -59,9 +59,9 @@ One Timer::start()/Timer::stop() cycle counts as one entry in the queue with its
 
 Therefore if you only do start() and stop() once, one queue item will be added.
 
-If you call Timer::start() and Timer::stop() multiple times without calling Timer::reset(), multiple entries will get added to the queue.
+If you call Timer::start() and Timer::stop() multiple times without calling Timer::reset() then multiple entries will get added to the queue.
 
-Then, when you call Timer::get(), the function will go through every queue entry, calculate the time that it took to execute and sum everything up to get the total time.
+Then, when you call Timer::get() the function will go through every queue entry, calculate the time that it took to execute and sum everything up to get the total time.
 
 Whenever you need to restart the calculation just call Timer::reset(). That will clear the queue of current times.
 
@@ -69,7 +69,7 @@ Whenever you need to restart the calculation just call Timer::reset(). That will
 
 The first and the most usual scenario, where you want to calculate the time it takes to run your whole script, is the easiest one.
 
-Just add Timer::start() at beginning of the file/script and print Timer::get(); at the end.
+Just add Timer::start() at beginning of the file/script and print Timer::get() at the end.
 
 Next, let's rewrite the examples we mentioned earlier. As you will see it is not much more different than timing the whole script:
 
@@ -138,15 +138,15 @@ The way you would use this class is pretty similar to the static class except yo
     $t2 = new Timer();
   
     for ($i = 0; $i < 100; $i++) {
-          // calculate the time it takes to run fx() using timer #1
-          $t1->start();
-          fx();
-          $t1->stop();
-  
-          // calculate the time it takes to run fy() using timer #2
-          $t2->start();
-          fy();
-          $t2->stop();
+      // calculate the time it takes to run fx() using timer #1
+      $t1->start();
+      fx();
+      $t1->stop();
+
+      // calculate the time it takes to run fy() using timer #2
+      $t2->start();
+      fy();
+      $t2->stop();
     }
   
     // get results
