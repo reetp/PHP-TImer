@@ -37,14 +37,29 @@ Download this snippet [Static class](class.Timer.non-static.php)
 
 First, let's look at the public methods that are available to you:
 
-  start() - start/resume the timer
-  stop() - stop/pause the timer
-  reset() - reset the timer
-  get([$format]) - stops the timer (if required) and returns the amount of time as number of seconds, milliseconds or microseconds. The type of the result depends on the value of the $format parameter. The format can be one of the following three: Timer::SECONDS (default), Timer::MILLISECONDS or Timer::MICROSECONDS. if the format is defined as seconds, the result will be a float, otherwise an int.
+* start() - start/resume the timer
+* stop() - stop/pause the timer
+* reset() - reset the timer
+* get([$format]) - stops the timer (if required) and returns the amount of time as number of seconds, milliseconds or microseconds.
+
+The type of the result depends on the value of the $format parameter.
+The format can be one of the following three:
+
+* Timer::SECONDS (default)
+* Timer::MILLISECONDS
+* Timer::MICROSECONDS.
+
+If the format is defined as seconds, the result will be a float, otherwise an int.
 
 ## How it works
 
-The class has a "queue" of times. One Timer::start()/Timer::stop() cycle counts as one entry in the queue with its own execution time. Therefore if you only do start() and stop() once, one queue item will be added. If you call Timer::start() and Timer::stop() multiple times without calling Timer::reset(), multiple entries will get added to the queue.
+The class has a "queue" of times.
+
+One Timer::start()/Timer::stop() cycle counts as one entry in the queue with its own execution time.
+
+Therefore if you only do start() and stop() once, one queue item will be added.
+
+If you call Timer::start() and Timer::stop() multiple times without calling Timer::reset(), multiple entries will get added to the queue.
 
 Then, when you call Timer::get(), the function will go through every queue entry, calculate the time that it took to execute and sum everything up to get the total time.
 
