@@ -64,9 +64,12 @@ If you call Timer::start() and Timer::stop() multiple times without calling Time
 Then, when you call Timer::get(), the function will go through every queue entry, calculate the time that it took to execute and sum everything up to get the total time.
 
 Whenever you need to restart the calculation just call Timer::reset(). That will clear the queue of current times.
-Examples
 
-The first and the most usual scenario, where you want to calculate the time it takes to run your whole script, is the easiest one. Just add Timer::start() at beginning of the file/script and print Timer::get(); at the end.
+## Examples
+
+The first and the most usual scenario, where you want to calculate the time it takes to run your whole script, is the easiest one.
+
+Just add Timer::start() at beginning of the file/script and print Timer::get(); at the end.
 
 Next, let's rewrite the examples we mentioned earlier. As you will see it is not much more different than timing the whole script:
 
@@ -118,9 +121,11 @@ In case you want to track how much time it has taken for the script to run "up t
 
 *IMPORTANT!*
 
-Timer::get() also stops the timer as it needs to set the final queue entry's end time. Therefore, if you call it between two blocks of code where the time gets calculated, you need to make sure you resume the timer by calling Timer::start().
+Timer::get() also stops the timer as it needs to set the final queue entry's end time.
 
-Non-static version of the class
+Therefore, if you call it between two blocks of code where the time gets calculated, you need to make sure you resume the timer by calling Timer::start().
+
+## Non-static version of the class
 
 For those that don't like static classes or who might need multiple instances of the Timer class, here is a modified version of the static class:
 
