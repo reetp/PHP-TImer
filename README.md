@@ -171,7 +171,7 @@ The way you would use this class is pretty similar to the static class except yo
 Hopefully these examples help. If not, please leave your comments with your questions or suggestions.
 
 
-Some notes from the comments:
+## Old comments
 
 Regarding crashing - I suppose you are not seeing any error messages. In that case make sure you have
 
