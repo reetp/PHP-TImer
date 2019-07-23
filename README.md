@@ -2,7 +2,7 @@
 
 PHP Class for code timer
 
-This is a simple class for adding as timer to your PHP script.
+This is a simple class for adding a timer to your PHP script.
 
 This is NOT my code. I originally found it at codeaid.net but that site has since disappeared so I decided to preserve it.
 
