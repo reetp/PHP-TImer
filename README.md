@@ -21,11 +21,11 @@ However, as good as that script is, it is not versatile enough. It does not, for
 
 Let's look at an example:
 
-    for ($i = 0; $i < 100; $i++) {
-         fx();
-         fy();
-         fz();
-    }
+  for ($i = 0; $i < 100; $i++) {
+       fx();
+       fy();
+       fz();
+  }
 
 What if we needed to time the execution of fy()? It's not impossible to do using the usual measures however it becomes a bit tedious. We would have to have multiple microtime calls, some local variable to store the total time and so on.
 
@@ -33,7 +33,7 @@ Therefore, to make my and hopefully someone else's life easier, I wrote a class 
 
 Here is the full source code of the class:
 
-Download this snippet [Static class](class.Timer.non-static.php)
+Download this snippet [Non Static class](class.Timer.non-static.php)
 
 First, let's look at the public methods that are available to you:
 
@@ -73,51 +73,51 @@ Just add Timer::start() at beginning of the file/script and print Timer::get() a
 
 Next, let's rewrite the examples we mentioned earlier. As you will see it is not much more different than timing the whole script:
 
-    for ($i = 0; $i < 100; $i++) {
-         fx();
-         // calculate the time it takes to run fy()
-         Timer::start();
-         fy();
-         Timer::stop();
-         fz();
-    }
-  
-    print Timer::get();
-    // or
-    print Timer::get(Timer::MICROSECONDS);
-    // or
-    print Timer::get(Timer::MILLISECONDS);
+  for ($i = 0; $i < 100; $i++) {
+       fx();
+       // calculate the time it takes to run fy()
+       Timer::start();
+       fy();
+       Timer::stop();
+       fz();
+  }
+
+  print Timer::get();
+  // or
+  print Timer::get(Timer::MICROSECONDS);
+  // or
+  print Timer::get(Timer::MILLISECONDS);
 
 As previously mentioned, if you wanted to calculate the total time it takes to execute fx() AND fz() we would need to adjust the code to wrap two blocks of code instead of just one:
 
-    for ($i = 0; $i < 100; $i++) {
-         // calculate the time it takes to run fx()
-         Timer::start();
-         fx();
-         Timer::stop();
-  
-         fy();
-  
-         // calculate the time it takes to run fz()
-         Timer::start();
-         fz();
-         Timer::stop();
-    }
-  
-    print Timer::get();
+  for ($i = 0; $i < 100; $i++) {
+       // calculate the time it takes to run fx()
+       Timer::start();
+       fx();
+       Timer::stop();
+
+       fy();
+
+       // calculate the time it takes to run fz()
+       Timer::start();
+       fz();
+       Timer::stop();
+  }
+
+  print Timer::get();
 
 In case you want to track how much time it has taken for the script to run "up to now" you can simply call the Timer::get() function in the middle of the loop:
 
-    for ($i = 0; $i < 100; $i++) {
-         fx();
-         // calculate the time it takes to run fy()
-         Timer::start();
-         fy();
-         Timer::stop();
-         fz();
-  
-         print Timer::get();
-    }
+  for ($i = 0; $i < 100; $i++) {
+       fx();
+       // calculate the time it takes to run fy()
+       Timer::start();
+       fy();
+       Timer::stop();
+       fz();
+
+       print Timer::get();
+  }
 
 *IMPORTANT!*
 
@@ -133,39 +133,39 @@ Download this snippet - [Static class](class.Timer.static.php)
 
 The way you would use this class is pretty similar to the static class except you can instantiate it and have multiple timers running on your page:
 
-    // instantiate two copies of the Timer class
-    $t1 = new Timer();
-    $t2 = new Timer();
-  
-    for ($i = 0; $i < 100; $i++) {
-      // calculate the time it takes to run fx() using timer #1
-      $t1->start();
-      fx();
-      $t1->stop();
+  // instantiate two copies of the Timer class
+  $t1 = new Timer();
+  $t2 = new Timer();
 
-      // calculate the time it takes to run fy() using timer #2
-      $t2->start();
-      fy();
-      $t2->stop();
-    }
-  
-    // get results
-    print $t1->get();
-    print $t2->get(Timer::MILLISECONDS);
+  for ($i = 0; $i < 100; $i++) {
+    // calculate the time it takes to run fx() using timer #1
+    $t1->start();
+    fx();
+    $t1->stop();
+
+    // calculate the time it takes to run fy() using timer #2
+    $t2->start();
+    fy();
+    $t2->stop();
+  }
+
+  // get results
+  print $t1->get();
+  print $t2->get(Timer::MILLISECONDS);
 
 ## Test Sample
 
-    <?php
-      Timer::start();
-      for ($i = 0; $i < 1000000; $i++) {
-       $x = log($i);
-      }
-      Timer::stop();
-  
-      var_dump(Timer::get(Timer::MILLISECONDS)); // int(728)
-      var_dump(Timer::get(Timer::MICROSECONDS)); // int(728340)
-      var_dump(Timer::get(Timer::SECONDS));      // float(0.72834)
-    ?>
+  <?php
+    Timer::start();
+    for ($i = 0; $i < 1000000; $i++) {
+     $x = log($i);
+    }
+    Timer::stop();
+
+    var_dump(Timer::get(Timer::MILLISECONDS)); // int(728)
+    var_dump(Timer::get(Timer::MICROSECONDS)); // int(728340)
+    var_dump(Timer::get(Timer::SECONDS));      // float(0.72834)
+  ?>
 
 
 Hopefully these examples help. If not, please leave your comments with your questions or suggestions.
@@ -175,46 +175,46 @@ Hopefully these examples help. If not, please leave your comments with your ques
 
 Regarding crashing - I suppose you are not seeing any error messages. In that case make sure you have
 
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
 
 
 
 Try adding this function to the non-static version (this has been done):
 
-    /*
-      * Get the average time of execution from all queue entries
-      *
-      * @return float
-      */
-  
-    public function getAverage($format = self::SECONDS)
-    {
-        $count = count($this->_queue);
-        $sec = 0;
-        $usec = $this->get(self::MICROSECONDS);
-  
-        if ($usec > self::USECDIV) {
-         // move the full second microseconds to the seconds' part
-         $sec += (int) floor($usec / self::USECDIV);
-  
-         // keep only the microseconds that are over the self::USECDIV
-         $usec = $usec % self::USECDIV;
-        }
-  
-        switch ($format) {
-         case self::MICROSECONDS:
-          $value = ($sec * self::USECDIV) + $usec;
-          return round($value / $count, 2);
-  
-         case self::MILLISECONDS:
-          $value = ($sec * 1000) + (int) round($usec / 1000, 0);
-          return round($value / $count, 2);
-  
-         case self::SECONDS:
-         default:
-          $value = (float) $sec + (float) ($usec / self::USECDIV);
-          return round($value / $count, 2);
-        }
-    }
+  /*
+    * Get the average time of execution from all queue entries
+    *
+    * @return float
+    */
+
+  public function getAverage($format = self::SECONDS)
+  {
+      $count = count($this->_queue);
+      $sec = 0;
+      $usec = $this->get(self::MICROSECONDS);
+
+      if ($usec > self::USECDIV) {
+       // move the full second microseconds to the seconds' part
+       $sec += (int) floor($usec / self::USECDIV);
+
+       // keep only the microseconds that are over the self::USECDIV
+       $usec = $usec % self::USECDIV;
+      }
+
+      switch ($format) {
+       case self::MICROSECONDS:
+        $value = ($sec * self::USECDIV) + $usec;
+        return round($value / $count, 2);
+
+       case self::MILLISECONDS:
+        $value = ($sec * 1000) + (int) round($usec / 1000, 0);
+        return round($value / $count, 2);
+
+       case self::SECONDS:
+       default:
+        $value = (float) $sec + (float) ($usec / self::USECDIV);
+        return round($value / $count, 2);
+      }
+  }
