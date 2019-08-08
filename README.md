@@ -35,7 +35,7 @@ Therefore, to make my and hopefully someone else's life easier, I wrote a class 
 
 Here is the full source code of the class:
 
-Download this snippet [Non Static class](class.Timer.non-static.php)
+Download this snippet [Static class](class.Timer.static.php)
 
 First, let's look at the public methods that are available to you:
 
@@ -137,7 +137,7 @@ Therefore, if you call it between two blocks of code where the time gets calcula
 
 For those that don't like static classes or who might need multiple instances of the Timer class, here is a modified version of the static class:
 
-Download this snippet - [Static class](class.Timer.static.php)
+Download this snippet - [Non Static class](class.Timer.non-static.php)
 
 The way you would use this class is pretty similar to the static class except you can instantiate it and have multiple timers running on your page:
 
